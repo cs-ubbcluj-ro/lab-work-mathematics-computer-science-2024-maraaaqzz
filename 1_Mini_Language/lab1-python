@@ -1,0 +1,98 @@
+I. Alphabet:
+
+      a. Upper case (A-Z) and lower case (a-z) letters of the English alphabet.
+      b. Underscore character `_` (identifier separation) // ex: my_var
+      c. Decimal digits (0-9).
+
+      Lexic:
+
+        a. Special symbols:
+              - Operators: `+`, `-`, `*`, `/`, `<`, `<=`, `=`, `>=`.
+              - Separators: `(`, `)`, `{`, `}`, `;`, space.
+
+        b. Reserved Words:
+              - Data types: `int`, `float`, 
+              - Control Statements: `if`, `else`, `while`, `for`
+              - I/O statements: `print`, `input`
+              - Boolean values: True | False
+
+        c. Identifiers:
+
+              identifier ::= letter { letter | digit }
+
+              - letter ::= "A" | "B" | ... | "Z" | "a" | "b" | ... | "z"
+              - digit ::= "0" | "1" | ... | "9"
+
+        d. Constants:
+
+              1. Integer:
+                  - integer ::= [+|-] digit { digit }
+                  - digit ::= "0" | "1" | ... | "9"
+
+              2. Float:
+                - float ::= [+|-] digit { digit } "." digit { digit }
+
+II. Syntax:
+
+      1. Program Structure:
+          program ::= "def" identifier "(" ")" ":" cmpdstm
+
+      2. Compound Statement:
+          cmpdstmt ::= stmtlist
+          stmtlist ::= stmt | stmt NEWLINE stmtlist // (recursive)
+
+      3. Statements:
+          stmt ::= assignstmt | iostmt | structstmt
+
+            - Simple Statements:
+                simple_stmt ::= assignstmt | iostmt
+
+            - Structured Statements:
+                structstmt ::= ifstmt | whilestmt | forstmt
+
+            - Assignment Statement:
+                assignstmt ::= (identifier "=" expression) | tupleassign
+                
+                tupleid ::= identifier | (tupleid ",") 
+                tupleexpr ::= expression | (expression ",")
+                tupleassign ::= tupleid "=" tupleexpr // ex: x, y, z = 1, 2, 3
+
+            - Input/Output Statement:
+                iostmt ::= "print" "(" expression ")" NEWLINE | identifier "=" "input" "(" ")" NEWLINE
+
+            - If-Else Statement:
+                ifstmt ::= "if" "(" condition ")" ":" NEWLINE stmtlist ["else" ":" NEWLINE stmtlist]
+
+            - While Statement:
+                whilestmt ::= "while" "(" condition ")" ":" NEWLINE stmtlist
+            
+            - For Statement:
+                forstmt ::= "for" "(" assignstmt condition ";" expression ")" ":" NEWLINE stmtlist
+
+      4. Expressions:
+          expression ::= expression ADD_OP term | term
+          term ::= term MUL_OP factor | factor
+          factor ::= "(" expression ")" | identifier | constant
+
+      5. Conditions:
+          condition ::= expression REL_OP expression
+          REL_OP ::= "==" | "!=" | "<" | "<=" | ">" | ">="
+          ADD_OP ::= "+" | "-"
+          MUL_OP ::= "*" | "/"
+
+      6. Constants:
+          constant ::= integer | float | bool_const
+          bool_const ::= "true" | "false"
+
+CODE EXAMPLE: 
+
+def main():
+    n = 30
+    sum = 0
+    i = 1
+
+    while (i <= n):
+        sum = sum + i
+        i = i + 1
+
+    print(sum)
