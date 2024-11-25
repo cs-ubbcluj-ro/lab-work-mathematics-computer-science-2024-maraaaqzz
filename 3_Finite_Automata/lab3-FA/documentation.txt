@@ -1,0 +1,20 @@
+for the language L={a^nb^m | n, m >= 1}
+
+
+BNF:
+
+<FA> ::= {
+    "states": <set_of_states>,
+    "alphabet": <set_of_alphabet_symbols>,
+    "transitions": <transition_table>,
+    "initial_state": <initial_state>,
+    "final_states": <set_of_final_states>
+}
+
+<set_of_states> ::= "[" <state> {"," <state>} "]"
+<set_of_alphabet_symbols> ::= "[" <symbol> {"," <symbol>} "]"
+<transition_table> ::= "{" <state>: {<symbol>: <state>, ...}, ... "}"
+<initial_state> ::= <state>
+<set_of_final_states> ::= "[" <state> {"," <state>} "]"
+<state> ::= <string>
+<symbol> ::= <string>
