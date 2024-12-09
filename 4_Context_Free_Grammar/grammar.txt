@@ -1,0 +1,63 @@
+# DEDENT decreases in indentation
+program -> "def" ID "(" ")" ":" NEWLINE INDENT stmtlist DEDENT
+
+stmtlist -> stmt NEWLINE | stmt NEWLINE stmtlist
+
+
+# statements
+stmt -> simplestmt | structstmt
+simplestmt -> assignstmt | iostmt
+structstmt -> ifstmt | whilestmt | forstmt
+
+assignstmt -> ID "=" expression | tupleassign
+tupleassign -> tupleid "=" tupleexpr
+tupleid -> ID | tupleid "," ID
+tupleexpr -> expression | tupleexpr "," expression
+
+
+iostmt -> "print" "(" expression ")" | ID "=" "input" "(" ")"
+
+
+ifstmt -> "if" "(" condition ")" ":" NEWLINE INDENT stmtlist DEDENT ["else" ":" NEWLINE INDENT stmtlist DEDENT]
+
+
+whilestmt -> "while" "(" condition ")" ":" NEWLINE INDENT stmtlist DEDENT
+
+
+forstmt -> "for" ID "in" range ":" NEWLINE INDENT stmtlist DEDENT
+range -> "range" "(" expression ["," expression] ")"
+
+
+expression -> expression ADD_OP term | term
+term -> term MUL_OP factor | factor
+factor -> "(" expression ")" | ID | constant
+
+
+condition -> expression REL_OP expression
+
+# constants
+constant -> int_constant | float_constant | string_constant | boolean_constant
+boolean_constant -> "True" | "False"
+
+# operators
+REL_OP -> "==" | "!=" | "<" | "<=" | ">" | ">="
+ADD_OP -> "+" | "-"
+MUL_OP -> "*" | "/"
+
+# identifiers
+ID -> letter { letter | digit | "_" }
+
+
+int_constant -> [ "+" | "-" ] digit { digit }
+float_constant -> int_constant "." digit { digit }
+
+
+string_constant -> '"' { character } '"'
+
+
+character -> letter | digit | special_character
+special_character -> "_" | "+" | "-" | "*" | "/" | "=" | "!" | ...
+
+
+letter -> "A" | "B" | ... | "Z" | "a" | "b" | ... | "z"
+digit -> "0" | "1" | ... | "9"
