@@ -1,0 +1,103 @@
+NONTERMINALS:
+
+program
+stmtlist
+stmt
+simplestmt
+assignstmt
+tupleassign
+tupleid
+tupleexpr
+iostmt
+ifstmt
+whilestmt
+forstmt
+expression
+
+TERMINALS:
+
+- reserved words:
+
+def
+print
+input
+if
+else
+while
+for
+in
+range
+True
+False
+
+- operators
+- delimiters
+
+START: program
+
+
+SYNTACTICAL RULES:
+->
+
+program -> "def" ID "(" ")" ":" NEWLINE stmtlist 
+
+stmtlist -> stmt NEWLINE | stmt NEWLINE stmtlist
+
+
+# statements
+stmt -> simplestmt | structstmt
+simplestmt -> assignstmt | iostmt
+structstmt -> ifstmt | whilestmt | forstmt
+
+assignstmt -> ID "=" expression | tupleassign
+tupleassign -> tupleid "=" tupleexpr
+tupleid -> "(" ID ")" | tupleid "," "(" ID ")"
+tupleexpr -> "(" expression ")" | tupleexpr "," "(" expression ")"
+
+
+iostmt -> "print" "(" expression ")" | ID "=" "input" "(" ")"
+
+
+ifstmt -> "if" "(" condition ")" ":" NEWLINE stmtlist | "if" "(" condition ")" ":" NEWLINE stmtlist "else" : NEWLINE stmtlist
+
+
+whilestmt -> "while" "(" condition ")" ":" NEWLINE stmtlist
+
+forstmt -> "for" ID "in" range ":" NEWLINE  stmtlist 
+range -> "range" ( expression ) | "range" ( expression , expression )
+
+
+expression -> expression ADD_OP term | term
+term -> term MUL_OP factor | factor
+factor -> "(" expression ")" | ID | constant
+
+
+condition -> expression REL_OP expression
+
+# constants
+constant -> int_constant | float_constant | string_constant | boolean_constant
+boolean_constant -> "True" | "False"
+
+
+# operators
+REL_OP -> "==" | "!=" | "<" | "<=" | ">" | ">="
+ADD_OP -> "+" | "-"
+MUL_OP -> "*" | "/"
+
+
+# identifiers
+ID -> letter | ID_LIST 
+ID_LIST ->  letter ID_LIST | digit ID_LIST | "_" ID_LIST | ID_LIST | eps
+
+letter -> "A" | "B" | ... | "Z" | "a" | "b" | ... | "z"
+digit -> "0" | "1" | ... | "9"
+
+
+# constants
+int_constant -> "+" digit | "-" digit | digit
+float_constant -> int_constant "." digit | digit
+
+character -> letter | digit | special_character
+special_character -> "_" | "+" | "-" | "*" | "/" | "=" | "!" | ...
+
+
